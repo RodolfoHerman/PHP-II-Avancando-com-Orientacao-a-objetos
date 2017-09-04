@@ -1,0 +1,19 @@
+body {
+    padding-top: 50px;
+}
+
+.principal {
+    padding: 10% 15px;
+    text-align: center;
+}
+
+footer {
+	margin-top: 30px;
+	background-color: black;
+}
+
+footer p {
+	text-align: center;
+	color: #DCDCDC;
+	padding: 10px;
+}
