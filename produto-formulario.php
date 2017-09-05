@@ -1,5 +1,4 @@
 <?php 
-	require_once("banco-categoria.php");
 	require_once("logica-usuario.php");
 	require_once("cabecalho.php"); 
 
@@ -7,6 +6,8 @@
 
 	$categoria_nova = new Categoria();
 	$categoria_nova->setId(1);
+
+	$categoriaDao = new CategoriaDao($con);
 
 	$produto = new Produto("", "", "", $categoria_nova, "");
 

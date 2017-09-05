@@ -1,5 +1,4 @@
 <?php
-	require_once("banco-produto.php");
 	require_once("logica-usuario.php");
 	require_once("cabecalho.php");
 
@@ -15,9 +14,11 @@
 	$usado = array_key_exists('usado', $_POST) ? 'true' : 'false';
 
 	$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+
+	$produtoDao = new ProdutoDao($con);
 ?>
 
-<?php if(insereProduto($con, $produto)): ?>
+<?php if($produtoDao->insereProduto($produto)): ?>
 	<p class="text-success">
 		Produto <?php echo $produto->getNome(); ?> com o valor de R$<?php echo $produto->getPreco(); ?> adicionado com sucesso !!
 	</p>	

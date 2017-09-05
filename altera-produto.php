@@ -1,5 +1,4 @@
 <?php
-	require_once("banco-produto.php");
 	require_once("cabecalho.php");
 
 	$categoria = new Categoria();
@@ -14,9 +13,11 @@
 	$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
 
 	$produto->setId($_POST['id']);
+
+	$produtoDao = new ProdutoDao($con);
 ?>
 
-<?php if(alteraProduto($con, $produto)): ?>
+<?php if($produtoDao->alteraProduto($produto)): ?>
 	<p class="text-success">
 		Produto <?php echo $produto->getNome(); ?> com o valor de R$<?php echo $produto->getPreco(); ?> alterado com sucesso !!
 	</p>	

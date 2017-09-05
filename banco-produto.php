@@ -1,5 +1,4 @@
 <?php
-require_once("conecta.php");
 
 function listaProdutos($con) {
 

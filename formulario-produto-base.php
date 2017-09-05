@@ -19,7 +19,7 @@
 		<th>Categoria: </th>
 		<td>
 			<select class="form-control" name="categoria_id">
-				<?php foreach(listaCategorias($con) as $categoria): ?>
+				<?php foreach($categoriaDao->listaCategorias() as $categoria): ?>
 					<?php $selecao = $categoria->getId() == $produto->getCategoria()->getId() ? 'selected' : ''; ?>
 					<option value="<?php echo $categoria->getId(); ?>" <?php echo $selecao; ?>><?php echo $categoria->getNome(); ?></option>
 				<?php endforeach; ?>

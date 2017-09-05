@@ -1,11 +1,11 @@
 <?php 
-	require_once("banco-produto.php");
 	require_once("cabecalho.php");
 
+	$produtoDao = new ProdutoDao($con);
 ?>
 
 <table class="table table-striped table-hover table-bordered">
-	<?php foreach(listaProdutos($con) as $produto): ?>
+	<?php foreach($produtoDao->listaProdutos() as $produto): ?>
 		<tr>
 			<td><?php echo $produto->getNome(); ?></td>
 			<td><?php echo $produto->getPreco(); ?></td>
