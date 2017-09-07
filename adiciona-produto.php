@@ -12,8 +12,17 @@
 	$preco = $_POST['preco'];
 	$descricao = $_POST['descricao'];
 	$usado = array_key_exists('usado', $_POST) ? 'true' : 'false';
+	$isbn = $_POST['isbn'];
+	$tipoProduto = $_POST['tipoProduto'];
 
-	$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+	if($tipoProduto == "Livro") {
+
+		$produto = new Livro($nome, $preco, $descricao, $categoria, $usado);
+		$produto->setIsbn($isbn);
+	} else {
+
+		$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+	}
 
 	$produtoDao = new ProdutoDao($con);
 ?>

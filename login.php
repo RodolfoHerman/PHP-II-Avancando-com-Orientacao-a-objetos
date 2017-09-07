@@ -1,4 +1,5 @@
 <?php
+require_once("cabecalho.php");
 require_once("banco-usuario.php");
 require_once("logica-usuario.php");
 

@@ -26,3 +26,19 @@
 			</select>
 		</td>
 	</tr>
+	<tr>
+		<th>Tipo produto: </th>
+		<td>
+			<select class="form-control" name="tipoProduto">
+				<?php $tipoProdutos = ["Livro", "Produto"];?>
+				<?php foreach($tipoProdutos as $tipo): ?>
+					<?php $selecao = $tipo == get_class($produto) ? 'selected' : ''; ?>
+					<option value="<?php echo $tipo; ?>" <?php echo $selecao; ?>><?php echo $tipo; ?></option>
+				<?php endforeach; ?>
+			</select>
+		</td>	
+	</tr>
+	<tr>
+		<th>ISBN (caso seja um livro): </th>
+		<td><input type="text" name="isbn" class="form-control" value="<?php echo $produto->temIsbn() ? $produto->getIsbn() : ''; ?>"></td>
+	</tr>

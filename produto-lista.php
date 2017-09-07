@@ -13,6 +13,7 @@
 			<td><?php echo substr($produto->getDescricao(), 0, 40); ?></td>
 			<td><?php echo $produto->getUsado() ? 'usado' : 'novo' ?></td>
 			<td><?php echo $produto->getCategoria()->getNome(); ?></td>
+			<td><?php echo $produto->temIsbn() ? $produto->getIsbn() : ''; ?></td>
 			<td><a class="btn btn-primary" href="produto-altera-formulario.php?id=<?php echo $produto->getId(); ?>">Alterar</a></td>
 			<td>
 				<form action="remove-produto.php" method="POST">
