@@ -34,6 +34,21 @@ class Produto {
 		return $this->nome;
 	}
 
+	public function atualizaBaseadoEm($params) {
+		
+		if ($this->temIsbn()) {
+			$this->setIsbn($params['isbn']);
+		}
+
+		if ($this->temTaxaImpressao()) {
+			$this->setTaxaImpressao($params['taxaImpressao']);
+		}
+
+		if ($this->temWaterMark()) {
+			$this->setWaterMark($params['waterMark']);
+		}
+	}
+
 	public function getId() {
 		return $this->id;
 	}
@@ -68,6 +83,14 @@ class Produto {
 
 	public function temIsbn(){
 		return $this instanceof Livro;
+	}
+
+	public function temTaxaImpressao() {
+		return $this instanceof LivroFisico;
+	}
+
+	public function temWaterMark() {
+		return $this instanceof Ebook;
 	}
 
 }

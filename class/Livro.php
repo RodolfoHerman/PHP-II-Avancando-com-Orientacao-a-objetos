@@ -1,7 +1,7 @@
 <?php
 
 
-class Livro extends Produto {
+abstract class Livro extends Produto {
 
 	private $isbn;
 

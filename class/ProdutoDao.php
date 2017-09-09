@@ -17,30 +17,18 @@ class ProdutoDao {
 		$produtos = array();
 
 		while($produto_array = mysqli_fetch_assoc($resultado)) {
-			
-			$categoria = new Categoria();
-
-			$categoria->setId($produto_array['categoria_id']);
-			$categoria->setNome($produto_array['categoria_nome']);
 
 			$produto_id = $produto_array['id'];
-			$nome = $produto_array['nome'];
-			$preco = $produto_array['preco'];
-			$descricao = $produto_array['descricao'];
-			$usado = $produto_array['usado'];
+		
 			$tipoProduto = $produto_array['tipoProduto'];
 
-			if($tipoProduto == "Livro") {
-
-				$produto = new Livro($nome, $preco, $descricao, $categoria, $usado);
-				$produto->setIsbn($produto_array['isbn']);
-			} else {
-
-				$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
-			}
+			$factory = new ProdutoFactory();
 			
-			
+			$produto = $factory->criaPor($tipoProduto, $produto_array);	
 			$produto->setId($produto_id);
+			$produto->atualizaBaseadoEm($produto_array);
+			$produto->getCategoria()->setId($produto_array['categoria_id']);
+			$produto->getCategoria()->setNome($produto_array['categoria_nome']);
 
 			array_push($produtos, $produto);
 		}
@@ -54,26 +42,15 @@ class ProdutoDao {
 
 		$produto_array = mysqli_fetch_assoc($resultado);
 
-		$categoria = new Categoria();
-
-		$categoria->setId($produto_array['categoria_id']);
-
+		$categoria_id = $produto_array['categoria_id'];
 		$produto_id = $produto_array['id'];
-		$nome = $produto_array['nome'];
-		$preco = $produto_array['preco'];
-		$descricao = $produto_array['descricao'];
-		$usado = $produto_array['usado'];
 		$tipoProduto = $produto_array['tipoProduto'];
 
-		if($tipoProduto == "Livro") {
+		$factory = new ProdutoFactory();
+		$produto = $factory->criaPor($tipoProduto, $produto_array);
+		$produto->atualizaBaseadoEm($produto_array);
 
-			$produto = new Livro($nome, $preco, $descricao, $categoria, $usado);
-			$produto->setIsbn($produto_array['isbn']);
-		} else {
-
-			$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
-		}
-
+		$produto->getCategoria()->setId($categoria_id);
 		$produto->setId($produto_id);
 
 		return $produto;
@@ -82,21 +59,27 @@ class ProdutoDao {
 	function alteraProduto(Produto $produto) {
 
 		$isbn = $produto->temIsbn() ? $produto->getIsbn() : '';
+		$taxaImpressao = $produto->temTaxaImpressao() ? $produto->getTaxaImpressao() : '';
+		$waterMark = $produto->temWaterMark() ? $produto->getWaterMark() : '';
 
 		$tipoProduto = get_class($produto);
 
 		$nome = $this->con->real_escape_string($produto->getNome());
 		$preco = $this->con->real_escape_string($produto->getPreco());
-		$descricao = $this->con->real_escape_string($produto->getDescricao());
+		$descricao = $this->con->real_escape_string($produto->descricao);
 		$isbn = $this->con->real_escape_string($isbn);
+		$taxaImpressao = $this->con->real_escape_string($taxaImpressao);
+		$waterMark = $this->con->real_escape_string($waterMark);
 
-		$query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = '{$produto->getCategoria()->getId()}', usado = {$produto->getUsado()}, isbn = '{$isbn}', tipoProduto = '{$tipoProduto}' WHERE id = '{$produto->getId()}'";
+		$query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = '{$produto->getCategoria()->getId()}', usado = {$produto->getUsado()}, isbn = '{$isbn}', tipoProduto = '{$tipoProduto}', taxaImpressao = '{$taxaImpressao}', waterMark = '{$waterMark}' WHERE id = '{$produto->getId()}'";
 		return $this->con->query($query);
 	}
 
 	function insereProduto(Produto $produto) {
 
 		$isbn = $produto->temIsbn() ? $produto->getIsbn() : '';
+		$taxaImpressao = $produto->temTaxaImpressao() ? $produto->getTaxaImpressao() : '';
+		$waterMark = $produto->temWaterMark() ? $produto->getWaterMark() : '';
 
 		$tipoProduto = get_class($produto);
 		
@@ -104,8 +87,10 @@ class ProdutoDao {
 		$preco = $this->con->real_escape_string($produto->getPreco());
 		$descricao = $this->con->real_escape_string($produto->descricao);
 		$isbn = $this->con->real_escape_string($isbn);
+		$taxaImpressao = $this->con->real_escape_string($taxaImpressao);
+		$waterMark = $this->con->real_escape_string($waterMark);
 
-		$query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado, isbn, tipoProduto) VALUES ('{$nome}', {$preco}, '{$descricao}', {$produto->getCategoria()->getId()}, {$produto->getUsado()}, '{$isbn}', '{$tipoProduto}')";
+		$query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado, isbn, tipoProduto, taxaImpressao, waterMark) VALUES ('{$nome}', {$preco}, '{$descricao}', {$produto->getCategoria()->getId()}, {$produto->getUsado()}, '{$isbn}', '{$tipoProduto}', '{$taxaImpressao}', '{$waterMark}')";
 		return $this->con->query($query);
 	}
 
