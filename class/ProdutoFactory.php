@@ -2,7 +2,7 @@
 
 class ProdutoFactory {
 
-	private $classes = ["Produto", "LivroFisico", "Ebook"];
+	private $classes = ["LivroFisico", "Ebook"];
 
 
 	public function criaPor($tipoProduto, $params) {
@@ -18,7 +18,7 @@ class ProdutoFactory {
 			return new $tipoProduto($nome, $preco, $descricao, $categoria, $usado);
 		} 
 
-		return new Produto($nome, $preco, $descricao, $categoria, $usado);
+		return new LivroFisico($nome, $preco, $descricao, $categoria, $usado);
 	}
 
 

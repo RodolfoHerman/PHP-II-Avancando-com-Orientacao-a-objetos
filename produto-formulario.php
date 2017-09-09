@@ -9,7 +9,7 @@
 
 	$categoriaDao = new CategoriaDao($con);
 
-	$produto = new Produto("", "", "", $categoria_nova, "");
+	$produto = new LivroFisico("", "", "", $categoria_nova, "");
 
 ?>
 
