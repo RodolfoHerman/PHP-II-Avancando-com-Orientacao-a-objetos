@@ -26,6 +26,10 @@ class Produto {
 		return $this->preco;
 	}
 
+	public function calculaImposto() {
+		return $this->preco * 0.195;
+	}
+
 	function __toString() {
 		return $this->nome;
 	}

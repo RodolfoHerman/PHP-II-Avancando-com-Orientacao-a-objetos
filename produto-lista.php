@@ -9,7 +9,7 @@
 		<tr>
 			<td><?php echo $produto->getNome(); ?></td>
 			<td><?php echo $produto->getPreco(); ?></td>
-			<td><?php echo $produto->precoComDesconto(0.2); ?></td>
+			<td><?php echo $produto->calculaImposto(); ?></td>
 			<td><?php echo substr($produto->getDescricao(), 0, 40); ?></td>
 			<td><?php echo $produto->getUsado() ? 'usado' : 'novo' ?></td>
 			<td><?php echo $produto->getCategoria()->getNome(); ?></td>
